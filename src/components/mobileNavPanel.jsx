@@ -47,7 +47,7 @@ export default function MobileNavPanel(props) {
                         transition-transform duration-300 ease-in-out shadow-lg`}
                     >
                         <div className="bg-accent w-full h-[70px] flex justify-center items-center relative">
-                            <img src="/logo.jpg" alt='logo' className='w-[60px] h-[60px] object-cover border-[1px] absolute left-1 rounded-full ' />
+                            <img src="/logo.png" alt='logo' className='w-[60px] h-[60px] object-cover border-[1px] absolute left-1 rounded-full ' />
                             <IoMdClose
                                 className="absolute right-3 text-3xl cursor-pointer hover:text-red-500 transition-colors"
                                 onClick={() => setOpen(false)}
