@@ -78,7 +78,7 @@ export default function HomePage() {
                   <img
                     src={cls.imageUrl}
                     alt={cls.name}
-                    className="w-full h-40 object-cover"
+                    className="w-full h-40 object-cover rounded-t-xl"
                   />
                   <div className="p-4 flex flex-col justify-between h-56">
                     <div>
