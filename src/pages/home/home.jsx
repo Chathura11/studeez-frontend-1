@@ -73,7 +73,7 @@ export default function HomePage() {
               return (
                 <div
                   key={cls._id}
-                  className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+                  className="bg-white rounded-2xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300 p-2"
                 >
                   <img
                     src={cls.imageUrl}
@@ -82,7 +82,7 @@ export default function HomePage() {
                   />
                   <div className="p-4 flex flex-col justify-between h-56">
                     <div>
-                      <h2 className="text-xl font-bold text-gray-800 mb-2">{cls.name}</h2>
+                      <h2 className="text-l font-bold text-gray-800 mb-2">{cls.name}</h2>
                       <p className="text-gray-600 text-sm mb-1">
                         <span className="font-semibold">Grade:</span> {cls.grade}
                       </p>
