@@ -2,9 +2,21 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 
-export default function StudentDashboard() {
+export default function StudentDashboard(props) {
   const [classes, setClasses] = useState([]);
   const [loading, setLoading] = useState(true);
+
+  const user= props.user; 
+
+  const hour = new Date().getHours();
+  let greeting = "Hello";
+  if (hour < 12) {
+      greeting = "Good Morning";
+  } else if (hour < 18) {
+      greeting = "Good Afternoon";
+  } else {
+      greeting = "Good Evening";
+  }  
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -30,7 +42,14 @@ export default function StudentDashboard() {
   return (
     <div className="min-h-screen bg-gray-50 p-8">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold mb-6">🎓 Student Dashboard</h1>
+        <div className="bg-gradient-to-r from-teal-600 via-teal-700 to-teal-800 p-6 rounded-b-2xl shadow-lg mb-4">
+          <h1 className="text-2xl md:text-3xl font-extrabold text-white mb-2 flex items-center gap-2">
+          🎓 Student Dashboard
+          </h1>
+          <p className="text-lg text-teal-100">
+            {greeting}, <span className="font-semibold">{user?user.name:'...'}</span> 👋
+          </p>
+        </div>
 
         {classes.length === 0 ? (
           <div className="bg-white rounded-xl shadow p-6">

@@ -53,17 +53,19 @@ export default function HomePage() {
     }
   };
 
-  return (
-    <div className="p-8 min-h-screen bg-gradient-to-br from-gray-100 to-gray-200">
-      <h1 className="text-4xl font-extrabold text-center mb-10 text-accent">
-        Explore Our Classes
-      </h1>
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center min-h-screen text-gray-500">
+        Loading Classes...
+      </div>
+    );
+  }
 
-      {loading ? (
-        <div className="flex justify-center items-center mt-20">
-          <div className="w-16 h-16 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
-        </div>
-      ) : (
+  return (
+      <div className="p-8 min-h-screen bg-gradient-to-br from-gray-100 to-gray-200">
+        <h1 className="text-4xl font-extrabold text-center mb-10 text-accent">
+          Explore Our Classes
+        </h1>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           {classes.length > 0 ? (
             classes.map((cls) => {
@@ -134,7 +136,6 @@ export default function HomePage() {
             </p>
           )}
         </div>
-      )}
-    </div>
+      </div>
   );
 }

@@ -43,7 +43,7 @@ const TeachersPage = () => {
 
   return (
     <div className="min-h-screen bg-gray-50 p-6">
-      <h1 className="text-3xl font-bold text-gray-800 mb-6 text-center">
+      <h1 className="text-4xl font-extrabold text-center mb-10 text-accent">
         Our Teachers
       </h1>
 

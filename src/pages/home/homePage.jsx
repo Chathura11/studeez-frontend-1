@@ -46,11 +46,11 @@ function homePage() {
                 {/* Redirect from / to /classes */}
                 <Route path="/" element={<Navigate to="/classes" replace />} />
 
-                <Route path="/teacher" element={<TeacherDashboard/>} />
+                <Route path="/teacher" element={<TeacherDashboard user={user}/>} />
                 <Route path="/teacher/classes" element={<TeacherClasses />} />
                 <Route path="/teacher/classes/:id" element={<TeacherClassDetail />} />
 
-                <Route path="/student" element={<StudentDashboard />} />
+                <Route path="/student" element={<StudentDashboard user={user}/>} />
                 <Route path="/student/class/:id" element={<StudentClassPage />} />
                 <Route path="/student/class/:id/materials" element={<StudentMaterialsPage />} />
                 <Route path="/student/class/:id/announcements" element={<StudentAnnouncementsPage />} />
