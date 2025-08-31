@@ -27,7 +27,6 @@ export default function TeacherDashboard(props) {
       })
       .then((res) => {
         setMyClasses(res.data || []);
-        console.log(res.data);
         const totalStudents = res.data.reduce((acc, c) => acc + (c.students?.length || 0), 0);
         const pending = res.data.reduce((acc, c) => acc + (c.studentRequests?.length || 0), 0);
         setStats({ classes: res.data.length, students: totalStudents, pending });

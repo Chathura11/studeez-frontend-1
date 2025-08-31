@@ -16,7 +16,6 @@ function App() {
 
   return (
     <GoogleOAuthProvider clientId='240939730538-hfvtfa08468377lhi7ao3lcg2p8qubd6.apps.googleusercontent.com'>
-      <BrowserRouter>
         <Toaster/>
         <Routes path="/*">
           <Route path='/login' element={<Login/>}></Route>
@@ -27,7 +26,6 @@ function App() {
           <Route path='/admin/*' element={<AdminPage/>}/>
           <Route path='/*' element={<HomePage/>} />
         </Routes> 
-      </BrowserRouter>
     </GoogleOAuthProvider>
   )
 }
