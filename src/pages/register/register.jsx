@@ -38,7 +38,7 @@ export default function Register() {
                 <div className="w-[600px] h-auto p-8 bg-white/30 backdrop-blur-2xl border border-white/20 rounded-3xl shadow-2xl flex flex-col justify-center items-center space-y-6">
 
                     <img
-                        src="/logo.jpg"
+                        src="/logo.png"
                         alt="Logo"
                         className="w-24 h-24 object-cover border-4 border-white rounded-full shadow-lg hover:scale-105 transition-transform duration-300"
                     />
