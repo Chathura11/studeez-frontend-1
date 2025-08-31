@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { FaUsers ,FaBell} from "react-icons/fa";
+import { FaBookOpen } from "react-icons/fa6";
 
 export default function TeacherDashboard(props) {
   const [stats, setStats] = useState({ classes: 0, students: 0, pending: 0 });
@@ -34,6 +36,27 @@ export default function TeacherDashboard(props) {
       .catch(() => {});
   }, []);
 
+  const cards = [
+    {
+      label: "My Classes",
+      value: stats.classes,
+      icon: <FaBookOpen className="w-8 h-8 text-teal-600" />,
+      color: "from-teal-100 to-teal-200",
+    },
+    {
+      label: "Total Students",
+      value: stats.students,
+      icon: <FaUsers className="w-8 h-8 text-blue-600" />,
+      color: "from-blue-100 to-blue-200",
+    },
+    {
+      label: "Pending Requests",
+      value: stats.pending,
+      icon: <FaBell className="w-8 h-8 text-orange-600" />,
+      color: "from-orange-100 to-orange-200",
+    },
+  ];
+
   return (
     <div className="p-6">
       <div className="max-w-7xl mx-auto">
@@ -46,19 +69,23 @@ export default function TeacherDashboard(props) {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-8">
-        <div className="bg-white p-5 rounded-xl shadow">
-          <p className="text-gray-500">My Classes</p>
-          <p className="text-3xl font-semibold">{stats.classes}</p>
-        </div>
-        <div className="bg-white p-5 rounded-xl shadow">
-          <p className="text-gray-500">Total Students</p>
-          <p className="text-3xl font-semibold">{stats.students}</p>
-        </div>
-        <div className="bg-white p-5 rounded-xl shadow">
-          <p className="text-gray-500">Pending Requests</p>
-          <p className="text-3xl font-semibold">{stats.pending}</p>
-        </div>
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+        {cards.map((card, i) => (
+          <div
+            key={i}
+            className="bg-white p-6 rounded-2xl shadow-md hover:shadow-xl transition-shadow duration-300 flex items-center gap-4"
+          >
+            <div
+              className={`p-4 rounded-xl bg-gradient-to-br ${card.color}`}
+            >
+              {card.icon}
+            </div>
+            <div>
+              <p className="text-gray-500 text-sm">{card.label}</p>
+              <p className="text-3xl font-bold text-gray-800">{card.value}</p>
+            </div>
+          </div>
+        ))}
       </div>
 
       <div>

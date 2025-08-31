@@ -2,7 +2,7 @@ import { useState } from "react";
 import "./register.css";
 import axios from 'axios';
 import toast from "react-hot-toast";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Register() {
     const [formData, setFormData] = useState({
@@ -97,6 +97,7 @@ export default function Register() {
                     >
                         Register
                     </button>
+                    <Link className="text-accent border-b" to={'/login'}>Login</Link>
                 </div>
             </form>
         </div>

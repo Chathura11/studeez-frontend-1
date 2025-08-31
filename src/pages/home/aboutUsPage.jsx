@@ -1,4 +1,5 @@
 import React from "react";
+import { FaPhoneAlt, FaEnvelope, FaMapMarkerAlt } from 'react-icons/fa';
 
 const AboutUs = () => {
   return (
@@ -29,6 +30,19 @@ const AboutUs = () => {
         </div>
       </section>
 
+      <section className="py-16 px-6 max-w-5xl mx-auto grid md:grid-cols-2 gap-8">
+        <div className="bg-white p-6 rounded-2xl shadow hover:shadow-lg text-center border-t-4 border-[#3674B5] transition">
+          <FaPhoneAlt className="text-4xl text-[#3674B5] mx-auto mb-4" />
+          <h3 className="text-xl font-bold mb-2">Call Us</h3>
+          <p className="text-gray-600">+94 763912183</p>
+        </div>
+
+        <div className="bg-white p-6 rounded-2xl shadow hover:shadow-lg text-center border-t-4 border-[#3674B5] transition">
+          <FaEnvelope className="text-4xl text-[#3674B5] mx-auto mb-4" />
+          <h3 className="text-xl font-bold mb-2">Email</h3>
+          <p className="text-gray-600">studeez.lanka@gmail.com</p>
+        </div>
+      </section>
       {/* Call to Action */}
       <section className="py-16 px-6 text-center">
         <h2 className="text-2xl font-bold mb-4">Join the Studeez Journey</h2>
