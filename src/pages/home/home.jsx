@@ -1,10 +1,13 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
 
 export default function HomePage() {
   const [classes, setClasses] = useState([]);
   const [loading, setLoading] = useState(true);
   const [studentId, setStudentId] = useState(null);
+
+  const navigate = useNavigate()
 
   useEffect(() => {
     fetchClasses();
@@ -12,6 +15,10 @@ export default function HomePage() {
   }, []);
 
   const token = localStorage.getItem("token");
+
+  if(token == null){
+    navigate('/login');
+  }
 
   const getCurrentUser = async () => {
     try {
