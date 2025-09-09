@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Calendar from "react-calendar";
+import "react-calendar/dist/Calendar.css"; // default styles
 
 export default function StudentClassPage() {
   const { id } = useParams(); // class id
@@ -8,6 +10,8 @@ export default function StudentClassPage() {
   const [cls, setCls] = useState(null);
   const [status, setStatus] = useState("loading"); // enrolled | pending | not-enrolled | loading
   const [requestLoading, setRequestLoading] = useState(false);
+  const [assignments, setAssignments] = useState([]);
+  const [zoomLinks, setZoomLinks] = useState([]);
 
   useEffect(() => {
     const token = localStorage.getItem("token");
@@ -15,12 +19,26 @@ export default function StudentClassPage() {
       .get(`${import.meta.env.VITE_BACKEND_URL}/api/class/${id}`, { headers: { Authorization: `Bearer ${token}` } })
       .then((res ) => {
         setCls(res.data);
-        if (data.isStudent) setStatus("enrolled");
-        else if (data.isPending) setStatus("pending");
-        else setStatus("not-enrolled");
       })
       .catch(() => {})
       .finally(() => {});
+
+    // fetch assignments
+    axios
+      .get(`${import.meta.env.VITE_BACKEND_URL}/api/assignment/class/${id}`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => setAssignments(res.data))
+      .catch(() => {});
+
+    // fetch zoom links
+    axios
+      .get(`${import.meta.env.VITE_BACKEND_URL}/api/zoomlink/${id}/zoom-links`, {
+        headers: { Authorization: `Bearer ${token}` },
+      })
+      .then((res) => setZoomLinks(res.data))
+      .catch(() => {});
+
   }, [id]);
 
   const handleRequestJoin = async () => {
@@ -36,6 +54,36 @@ export default function StudentClassPage() {
     } finally {
       setRequestLoading(false);
     }
+  };
+
+  // prepare marked dates
+  const assignmentDates = assignments.map((a) =>
+    new Date(a.dueAt).toDateString()
+  );
+  const zoomDates = zoomLinks.map((z) =>
+    new Date(z.date).toDateString()
+  );
+
+  const tileClassName = ({ date }) => {
+    const dateStr = date.toDateString();
+  
+    // ✅ Both assignment + zoom
+    if (assignmentDates.includes(dateStr) && zoomDates.includes(dateStr)) {
+      return "!bg-purple-300 !text-purple-900 font-bold rounded-full"; 
+      // merged → purple
+    }
+  
+    // ✅ Only assignment
+    if (assignmentDates.includes(dateStr)) {
+      return "!bg-blue-200 !text-blue-800 font-bold rounded-full"; 
+    }
+  
+    // ✅ Only zoom
+    if (zoomDates.includes(dateStr)) {
+      return "!bg-green-200 !text-green-800 font-bold rounded-full"; 
+    }
+  
+    return "";
   };
 
   if (!cls) return (
@@ -59,48 +107,6 @@ export default function StudentClassPage() {
             <p className="text-gray-600">Grade: {cls.grade}</p>
             <p className="text-gray-600">📘 {cls.subject?.name || "-"}</p>
             <p className="text-gray-600">👨‍🏫 {cls.teacher?.name || "-"}</p>
-
-            <div className="mt-4 flex gap-3">
-              {status === "enrolled" && (
-                <>
-                  <span className="px-3 py-1 rounded bg-green-100 text-green-700">
-                    Enrolled
-                  </span>
-                  <button
-                    onClick={() => navigate(`/class/${id}/materials`)}
-                    className="px-4 py-2 bg-gray-800 text-white rounded hover:bg-black"
-                  >
-                    Open Materials
-                  </button>
-                  <button
-                    onClick={() => navigate(`/class/${id}/assignments`)}
-                    className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700"
-                  >
-                    View Assignments
-                  </button>
-                  <button
-                    onClick={() => navigate(`/class/${id}/announcements`)}
-                    className="px-4 py-2 bg-amber-600 text-white rounded hover:bg-amber-700"
-                  >
-                    Announcements
-                  </button>
-                </>
-              )}
-              {status === "pending" && (
-                <span className="px-3 py-1 rounded bg-yellow-100 text-yellow-700">
-                  Request Pending
-                </span>
-              )}
-              {status === "not-enrolled" && (
-                <button
-                  onClick={handleRequestJoin}
-                  disabled={requestLoading}
-                  className="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 disabled:opacity-60"
-                >
-                  {requestLoading ? "Sending..." : "Request to Join"}
-                </button>
-              )}
-            </div>
           </div>
         </div>
 
@@ -133,6 +139,18 @@ export default function StudentClassPage() {
             </Link>
           </div>
         </div>
+
+        {/* Calendar Section */}
+        <div className="mt-10 border-t pt-6">
+          <h2 className="text-lg font-semibold mb-3">Class Calendar</h2>
+          <Calendar tileClassName={tileClassName} />
+          <div className="mt-4 flex gap-4 text-sm">
+            <span className="px-3 py-1 bg-blue-200 rounded-full">Assignments</span>
+            <span className="px-3 py-1 bg-green-200 rounded-full">Zoom Links</span>
+            <span className="px-3 py-1 bg-purple-200 rounded-full">Both</span>
+          </div>
+        </div>
+
       </div>
     </div>
   );
