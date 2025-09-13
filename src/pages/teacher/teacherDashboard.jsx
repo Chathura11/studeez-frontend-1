@@ -129,9 +129,9 @@ export default function TeacherDashboard({ user }) {
                       src={cls.imageUrl}
                       alt={cls.name}
                       className="w-full h-40 object-cover rounded-lg mb-3"
-                    />                   
-                    <h3 className="text-lg font-bold">{cls.name}</h3>
+                    />
                     <p className="text-sm text-gray-500">{cls.subject?.name}</p>
+                    <h3 className="text-lg font-bold">{cls.name}</h3>
                     <p className="text-sm text-gray-600">Grade: {cls.grade}</p>
                     <p className="text-sm text-gray-600">Students: {cls.students?.length}</p>
                     <p
